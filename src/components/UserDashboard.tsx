@@ -1,14 +1,26 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Watch, AlertTriangle, Calendar, Settings } from "lucide-react";
+import { Watch, AlertTriangle, Calendar, Settings, Users } from "lucide-react";
 import StreakCalendar from "./StreakCalendar";
 import EmergencyActive from "./EmergencyActive";
 
+interface EmergencyContact {
+  name: string;
+  phone: string;
+}
+
+interface UserProfile {
+  name: string;
+  phone: string;
+  emergencyContacts: EmergencyContact[];
+}
+
 interface UserDashboardProps {
+  userProfile: UserProfile | null;
   onBack: () => void;
 }
 
-const UserDashboard = ({ onBack }: UserDashboardProps) => {
+const UserDashboard = ({ userProfile, onBack }: UserDashboardProps) => {
   const [isEmergency, setIsEmergency] = useState(false);
   const [streak] = useState(5);
   const [connectedDays] = useState([true, true, true, true, true, false, false]);
@@ -35,7 +47,9 @@ const UserDashboard = ({ onBack }: UserDashboardProps) => {
             </svg>
           </button>
           <div>
-            <h1 className="text-xl font-bold font-display text-foreground">My Safety</h1>
+            <h1 className="text-xl font-bold font-display text-foreground">
+              {userProfile ? `Hi, ${userProfile.name.split(' ')[0]}` : 'My Safety'}
+            </h1>
             <p className="text-sm text-muted-foreground">Always protected 🌸</p>
           </div>
         </div>
@@ -44,6 +58,34 @@ const UserDashboard = ({ onBack }: UserDashboardProps) => {
           <Settings className="w-5 h-5 text-muted-foreground" />
         </button>
       </motion.div>
+
+      {/* User Info Card */}
+      {userProfile && (
+        <motion.div
+          className="bg-card rounded-3xl p-5 shadow-soft mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-lg">
+                {userProfile.name.charAt(0).toUpperCase()}
+              </span>
+            </div>
+            <div className="flex-1">
+              <p className="font-bold text-foreground">{userProfile.name}</p>
+              <p className="text-sm text-muted-foreground">+91 {userProfile.phone}</p>
+            </div>
+            <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-secondary/50">
+              <Users className="w-4 h-4 text-secondary-foreground" />
+              <span className="text-sm font-medium text-secondary-foreground">
+                {userProfile.emergencyContacts.length}
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* Connection Status */}
       <motion.div
