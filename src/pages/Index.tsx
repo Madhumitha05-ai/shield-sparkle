@@ -6,7 +6,19 @@ import OfficerLogin from "../components/OfficerLogin";
 import OfficerDashboard from "../components/OfficerDashboard";
 import OfficerAlertScreen from "../components/OfficerAlertScreen";
 import UserConnection from "../components/UserConnection";
+import UserRegistration from "../components/UserRegistration";
 import UserDashboard from "../components/UserDashboard";
+
+interface EmergencyContact {
+  name: string;
+  phone: string;
+}
+
+interface UserProfile {
+  name: string;
+  phone: string;
+  emergencyContacts: EmergencyContact[];
+}
 
 type Screen =
   | "home"
@@ -14,6 +26,7 @@ type Screen =
   | "officer-dashboard"
   | "officer-alert"
   | "user-connection"
+  | "user-registration"
   | "user-dashboard";
 
 type IconState = "safe" | "connected" | "emergency" | "inactive";
@@ -22,6 +35,7 @@ const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>("home");
   const [iconState, setIconState] = useState<IconState>("safe");
   const [streak] = useState(5);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -50,6 +64,16 @@ const Index = () => {
         return (
           <UserConnection
             onConnected={() => {
+              setCurrentScreen("user-registration");
+            }}
+            onBack={() => setCurrentScreen("home")}
+          />
+        );
+      case "user-registration":
+        return (
+          <UserRegistration
+            onComplete={(data) => {
+              setUserProfile(data);
               setIconState("connected");
               setCurrentScreen("user-dashboard");
             }}
@@ -57,7 +81,7 @@ const Index = () => {
           />
         );
       case "user-dashboard":
-        return <UserDashboard onBack={() => setCurrentScreen("home")} />;
+        return <UserDashboard userProfile={userProfile} onBack={() => setCurrentScreen("home")} />;
       default:
         return (
           <HomeScreen
