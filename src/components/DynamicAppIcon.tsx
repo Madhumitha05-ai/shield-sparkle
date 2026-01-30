@@ -74,7 +74,7 @@ const DynamicAppIcon = ({ state, streak = 0, size = "md" }: DynamicAppIconProps)
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        {/* Shield shape */}
+        {/* Heart shape */}
         <svg
           width={iconSize[size]}
           height={iconSize[size]}
@@ -82,22 +82,24 @@ const DynamicAppIcon = ({ state, streak = 0, size = "md" }: DynamicAppIconProps)
           fill="none"
           className="drop-shadow-lg"
         >
+          {/* Heart background */}
           <path
-            d="M32 4L8 14V30C8 45.464 18.536 58.464 32 62C45.464 58.464 56 45.464 56 30V14L32 4Z"
+            d="M32 56C32 56 8 40 8 24C8 14 16 8 24 8C28.5 8 32 12 32 12C32 12 35.5 8 40 8C48 8 56 14 56 24C56 40 32 56 32 56Z"
             fill="white"
             fillOpacity={0.9}
           />
+          {/* Heart fill */}
           <path
-            d="M32 8L12 16.5V30C12 43.255 21.255 54.255 32 57.5C42.745 54.255 52 43.255 52 30V16.5L32 8Z"
-            fill="url(#shieldGradient)"
+            d="M32 52C32 52 12 38 12 25C12 16.5 18.5 12 25 12C29 12 32 15.5 32 15.5C32 15.5 35 12 39 12C45.5 12 52 16.5 52 25C52 38 32 52 32 52Z"
+            fill="url(#heartGradient)"
           />
           {/* Face for safe state */}
           {state === "safe" && (
             <>
-              <circle cx="24" cy="28" r="3" fill="hsl(320, 30%, 20%)" />
-              <circle cx="40" cy="28" r="3" fill="hsl(320, 30%, 20%)" />
+              <circle cx="24" cy="28" r="2.5" fill="hsl(320, 30%, 20%)" />
+              <circle cx="40" cy="28" r="2.5" fill="hsl(320, 30%, 20%)" />
               <path
-                d="M24 38C24 38 28 44 32 44C36 44 40 38 40 38"
+                d="M25 36C25 36 28 41 32 41C36 41 39 36 39 36"
                 stroke="hsl(320, 30%, 20%)"
                 strokeWidth="2.5"
                 strokeLinecap="round"
@@ -106,11 +108,13 @@ const DynamicAppIcon = ({ state, streak = 0, size = "md" }: DynamicAppIconProps)
           )}
           {/* Watch icon for connected */}
           {state === "connected" && (
-            <g transform="translate(20, 24)">
-              <rect x="4" y="0" width="16" height="20" rx="3" fill="hsl(320, 30%, 20%)" />
-              <rect x="6" y="2" width="12" height="12" rx="2" fill="hsl(150, 60%, 45%)" />
-              <rect x="8" y="-4" width="8" height="4" rx="1" fill="hsl(320, 30%, 20%)" />
-              <rect x="8" y="20" width="8" height="4" rx="1" fill="hsl(320, 30%, 20%)" />
+            <g transform="translate(22, 22)">
+              <rect x="4" y="2" width="12" height="16" rx="2" fill="hsl(320, 30%, 20%)" />
+              <rect x="5.5" y="4" width="9" height="9" rx="1.5" fill="hsl(150, 60%, 45%)" />
+              <rect x="7" y="-1" width="6" height="3" rx="1" fill="hsl(320, 30%, 20%)" />
+              <rect x="7" y="18" width="6" height="3" rx="1" fill="hsl(320, 30%, 20%)" />
+              <circle cx="10" cy="8.5" r="3" stroke="hsl(320, 30%, 20%)" strokeWidth="0.8" fill="none" />
+              <path d="M10 6.5V8.5L11.5 9.5" stroke="hsl(320, 30%, 20%)" strokeWidth="0.8" strokeLinecap="round" />
             </g>
           )}
           {/* Alert waves for emergency */}
@@ -118,16 +122,16 @@ const DynamicAppIcon = ({ state, streak = 0, size = "md" }: DynamicAppIconProps)
             <g>
               <motion.circle
                 cx="32"
-                cy="32"
-                r="8"
+                cy="30"
+                r="6"
                 fill="hsl(0, 75%, 55%)"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 0.5, repeat: Infinity }}
               />
               <motion.circle
                 cx="32"
-                cy="32"
-                r="14"
+                cy="30"
+                r="11"
                 stroke="hsl(0, 75%, 55%)"
                 strokeWidth="2"
                 fill="none"
@@ -136,8 +140,8 @@ const DynamicAppIcon = ({ state, streak = 0, size = "md" }: DynamicAppIconProps)
               />
               <motion.circle
                 cx="32"
-                cy="32"
-                r="20"
+                cy="30"
+                r="16"
                 stroke="hsl(0, 75%, 55%)"
                 strokeWidth="1.5"
                 fill="none"
@@ -152,7 +156,7 @@ const DynamicAppIcon = ({ state, streak = 0, size = "md" }: DynamicAppIconProps)
               <circle cx="24" cy="28" r="2" fill="hsl(320, 20%, 45%)" />
               <circle cx="40" cy="28" r="2" fill="hsl(320, 20%, 45%)" />
               <path
-                d="M26 40H38"
+                d="M27 38H37"
                 stroke="hsl(320, 20%, 45%)"
                 strokeWidth="2"
                 strokeLinecap="round"
@@ -160,7 +164,7 @@ const DynamicAppIcon = ({ state, streak = 0, size = "md" }: DynamicAppIconProps)
             </>
           )}
           <defs>
-            <linearGradient id="shieldGradient" x1="12" y1="8" x2="52" y2="57.5">
+            <linearGradient id="heartGradient" x1="12" y1="12" x2="52" y2="52">
               <stop stopColor="hsl(340, 75%, 65%)" />
               <stop offset="1" stopColor="hsl(270, 50%, 70%)" />
             </linearGradient>
